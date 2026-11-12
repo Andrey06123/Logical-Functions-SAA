@@ -3,6 +3,7 @@ using System;
 using LogicalLibrary.DataStructures;
 using LogicalLibrary.Models;
 using LogicalLibrary.TextProcessing;
+using LogicalLibrary.Commands;
 
 namespace Logic_SAA
 {
@@ -32,11 +33,17 @@ namespace Logic_SAA
                     Solve solve = new Solve(input, functionRegistry);
                     Console.WriteLine($"Result: {solve.Execute()}");
                     break;
-                case "FIND":
-                    Console.WriteLine("Simplify function called.");
-                    break;
                 case "ALL":
-                    Console.WriteLine("All functions called.");
+                    All all = new All(input, functionRegistry);
+                    all.Execute();
+                    break;
+                case "FIND":
+                    Find find = new Find(input, functionRegistry);
+                    List<string> validExpressions = find.Execute();
+                    if (validExpressions.Count == 0)
+                        Console.WriteLine("There is no valid expression to this table");
+                    for(int i = 0; i< validExpressions.Count(); i++)
+                        Console.WriteLine(validExpressions[i]);
                     break;
                 default:
                     Console.WriteLine("Unknown command.");
